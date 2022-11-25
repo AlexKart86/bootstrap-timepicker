@@ -355,6 +355,17 @@
         return '';
       }
 
+      //---->
+      //custom modified part. Prevent to setup 24:01, 24:02... but allow 24:00
+      //you should setup maxHours: 25 in options object that passed to .timepicker method to allow 24:00
+      //see https://stackoverflow.com/a/22993749/17918868 for details
+
+      if (this.hour == 24 && this.minute != 0) {
+          this.setTime('24:00');
+          return '24:00';
+      }
+      //<----
+
       return this.hour + ':' + (this.minute.toString().length === 1 ? '0' + this.minute : this.minute) + (this.showSeconds ? ':' + (this.second.toString().length === 1 ? '0' + this.second : this.second) : '') + (this.showMeridian ? ' ' + this.meridian : '');
     },
 
@@ -777,7 +788,7 @@
       }
     },
 
-    setTime: function(time, ignoreWidget) {
+      setTime: function (time, ignoreWidget) {
       if (!time) {
         this.clear();
         return;
@@ -905,7 +916,7 @@
       }
       this.meridian = meridian;
 
-      this.update(ignoreWidget);
+        this.update(ignoreWidget);
     },
 
     showWidget: function() {
